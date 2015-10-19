@@ -11,5 +11,5 @@ def factorylist(lstint,element,amountint):
 
 
 lst = []
-factorylist(lst,1,9) 
-print(lst)
+newlst = factorylist(lst,1,9) 
+print(newlst)
