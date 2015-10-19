@@ -1,4 +1,3 @@
-
 def factorylist(lstint,element,amountint): 
 	
 	lstint.append(str(element))
@@ -9,7 +8,6 @@ def factorylist(lstint,element,amountint):
 	
 	return lstint
 
-
 lst = []
-newlst = factorylist(lst,1,9) 
-print(newlst)
+factorylist(lst,1,9) 
+print(lst)
