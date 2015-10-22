@@ -1,5 +1,20 @@
 import random
 
+def sotrlist(lstincome):
+	
+	trumplist = []
+	cardslist = []
+	
+	for i in lstincome: 
+		if i[0] == trumpcard[0]: 
+			trumplist.append(i)
+		else:
+			cardslist.append(i)
+	
+	print(cardslist)
+	print(trumplist)
+			
+
 def makecardslist(lstlears,lstcards):
 	
 	lst = []
@@ -10,24 +25,38 @@ def makecardslist(lstlears,lstcards):
 
 	return lst
 
+#takes card from list. 
+#next card if randomchoice = False 
+#random card if randomchoice = True 	
+def cardfromlst(lstfrom,lstto,amount,randomchoice=False):
 
-def randomcardfromlst(lstfrom,lstto,amount):
-	
 	amount = min(amount,len(lstfrom)) 
-	
-	if amount == 0:
+
+	if amount < 1: 
 		return False
 	
-	rndcard = random.choice(lstfrom) 
-	lstto.append(rndcard)
-	lstfrom.remove(rndcard)
+	if randomchoice: 
+		card = random.choice(lstfrom) 
+	else:
+		card = lstfrom[0]
+		
+	lstto.append(card)
+	lstfrom.remove(card)
 
 	if amount > 1:
-		randomcardfromlst(lstfrom,lstto,amount-1) 
+		cardfromlst(lstfrom,lstto,amount-1,randomchoice) 
 
 	return True
 
+#return shufled list from recieved one
+def shufflecards(lsttoshuffle):
+	
+	lstshuffled = [] 
+	cardfromlst(lsttoshuffle,lstshuffled,len(lsttoshuffle),True)	
 
+	return lstshuffled
+	
+#move
 def makestep(lstfrom,playlist,trumpcard): 
 
 	if len(playlist) == 0: # firs step:
@@ -41,13 +70,13 @@ def makestep(lstfrom,playlist,trumpcard):
 	else: 
 		return False
 
-		
+#countermove		
 def answerstep(lstfrom,playlist,trumpcard):
 
 	randomize = random.random()
 	
 	if len(lstfrom) != 0:
-		if randomize > 0.2:
+		if randomize > 0.4:
 			card = random.choice(lstfrom);
 			playlist.append(card)
 			lstfrom.remove(card)
@@ -58,20 +87,28 @@ def answerstep(lstfrom,playlist,trumpcard):
 	else: 
 		return True
 
+
+def printstatus(mycards,compcards,lst):
+	
+	print('\nmy - '+str(len(mycards))+' '+str(mycards))
+	print('comp - '+str(len(compcards))+' '+str(compcards))
+	print('lst - '+str(len(lst))+' '+str(lst))
 		
+			
 print('============================================')
 		
 lstlears = ['h','d','c','s']
 lstcards = ['6','7','8','9','0','j','q','k','a']
 
-lst = makecardslist(lstlears,lstcards)
+lstnew = makecardslist(lstlears,lstcards)
+lst = shufflecards(lstnew) 
 
 mycards = []
 compcards = []
-playlist = []
+playlist = [] #list of current game session (before pass out)
 
-randomcardfromlst(lst,mycards,6);
-randomcardfromlst(lst,compcards,6);
+cardfromlst(lst,mycards,6-len(mycards))
+cardfromlst(lst,compcards,6-len(compcards))
 
 trumpcard = lst[len(lst)-1]
 
@@ -79,27 +116,22 @@ direction = True
 
 while len(compcards) != 0 and len(mycards) != 0:
 	
-	if direction:
-		makestep(mycards,playlist,trumpcard)	
-		direction = not answerstep(compcards,playlist,trumpcard)
-	else:	
-		makestep(compcards,playlist,trumpcard) 
-		direction = answerstep(mycards,playlist,trumpcard)  
-	
 	playlist = []
 	
-	randomcardfromlst(lst,mycards,max(6-len(mycards),0));
-	randomcardfromlst(lst,compcards,max(6-len(compcards),0));
+	if direction:
+		firstlst = mycards
+		secondlst = compcards 
+	else:	
+		firstlst = compcards
+		secondlst = mycards 
 	
-	print('\nmy - '+str(len(mycards))+' '+str(mycards))
-	print('comp - '+str(len(compcards))+' '+str(compcards))
-	print('lst - '+str(len(lst))+' '+str(lst))
-
+	makestep(firstlst,playlist,trumpcard)	
+	direction = not answerstep(secondlst,playlist,trumpcard)
+	
+	cardfromlst(lst,firstlst,6-len(firstlst))
+	cardfromlst(lst,secondlst,6-len(secondlst))
+	
+	printstatus(mycards,compcards,lst)
 
 print('\n------------------------')
-
-# print(mycards)
-# print(compcards)
-# print(lst)
-# print(len(lst))
-# print(trumpcard)
+printstatus(mycards,compcards,lst)
