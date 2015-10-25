@@ -9,7 +9,7 @@ SpentMoney = 0
 def QestionYesNo(mesage):
 
 	print('') 
-	answer = input(mesage+'. Y or N ? ') 
+	answer = raw_input(mesage+'. Y or N ? ') 
 	#print('answer - '+answer)
 	
 	if answer == 'y':
@@ -39,7 +39,7 @@ def QuestionFromArray(message,inputarray):
 	else:
 		variantslist = inputarray
 
-	answer = input('Your choise - '+str(variantslist)+'? : ')
+	answer = raw_input('Your choise - '+str(variantslist)+'? : ')
 	#print('answer - '+answer)
 	
 	if len(answer) == 1 and answer in variantslist:
@@ -90,11 +90,11 @@ if BusinessType == '4':
 else:	
 	print('%s - good choise' %BusinessTypeChoise[BusinessType])
 	
-StartCapital = int(input('\nHow much money would you like to invest? '))
+StartCapital = int(raw_input('\nHow much money would you like to invest? '))
 
 while StartCapital < 1000:	
 	print('\n%s is not enough. Try again' %StartCapital)
-	StartCapital = int(input('How much money would you like to invest? '))
+	StartCapital = int(raw_input('How much money would you like to invest? '))
 
 StartMonth1 = QestionYesNo("Start month 1?")
 	
@@ -118,19 +118,19 @@ PricesChoise = QuestionFromArray('Choise prices action ',PricesList)
 
 if PricesChoise == '1':
 	
-	RisingPercent = int(input('Input percent for rising: '))
+	RisingPercent = int(raw_input('Input percent for rising: '))
 	while RisingPercent < 0 or RisingPercent > 100: 
 		print('Range for rising must be beetween 0 and 100! Try again')
-		RisingPercent = int(input('Input percent for rising'))
+		RisingPercent = int(raw_input('Input percent for rising'))
 	
 	EarnedMoney2 = round(StartCapital*0.05*(1-RisingPercent/100))
 	
 elif PricesChoise == '2':
 	
-	DiscountPercent = int(input('Input percent for discount: '))
+	DiscountPercent = int(raw_input('Input percent for discount: '))
 	while DiscountPercent < 0 or DiscountPercent > 100: 
 		print('Range for discount must be beetween 0 and 100! Try again')
-		DiscountPercent = int(input('Input percent for rising'))
+		DiscountPercent = int(raw_input('Input percent for rising'))
 	
 	if DiscountPercent > 70: 
 		EarnRatio = -0.9*DiscountPercent/100
@@ -167,10 +167,10 @@ InspectorChoise = QuestionFromArray('Choise inspector action ',InspectorList)
 PoliceChoise = '0'
 
 if InspectorChoise == '1':
-	BribeAmountInspector = int(input('How many do you want to give?'))
+	BribeAmountInspector = int(raw_input('How many do you want to give?'))
 	while BribeAmountInspector < round(StartCapital*0.01):
 		print('phhhh! Inspector said %s not enough. Give him more!' %BribeAmountInspector)
-		BribeAmountInspector = int(input('How many do want to give?')) 
+		BribeAmountInspector = int(raw_input('How many do want to give?')) 
 		
 	SpentMoney += BribeAmountInspector 
 
@@ -182,10 +182,10 @@ elif InspectorChoise == '2':
 	PoliceChoise = QuestionFromArray('Choise police action ',PoliceList)
 	
 	if PoliceChoise == '1':
-		BribeAmountPolice = int(input('How many do want to give? '))
+		BribeAmountPolice = int(raw_input('How many do want to give? '))
 		while BribeAmountPolice < round(StartCapital*0.1):
 			print('\nPphhhh! Police and inspector said it`s %s not enough. Propose them more!' %BribeAmountPolice)
-			BribeAmountPolice = int(input('How many do want to give? ')) 
+			BribeAmountPolice = int(raw_input('How many do want to give? ')) 
 			
 		SpentMoney += BribeAmountPolice	
 		
