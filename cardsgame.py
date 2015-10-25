@@ -250,3 +250,4 @@ elif len(compcards) > 0:
 
 print('\n----------- '+status+' -------------')
 printstatus(mycards,compcards,lst,'left cards:')
+
