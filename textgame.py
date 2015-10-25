@@ -9,16 +9,16 @@ SpentMoney = 0
 def QestionYesNo(mesage):
 
 	print('') 
-	answer = raw_input(mesage+'. Y or N ? ') 
-	#print('answer - '+answer)
-	
-	if answer == 'y':
-		return True
-	elif answer == 'n':
-		return False
-	else: 
-		print('You need to input - "y" or "n" letter. Please try again')
-		QestionYesNo(mesage)
+	while True:
+		answer = raw_input(mesage+'. Y or N ? ') 
+		if answer.lower() == 'y':
+			return True
+			break
+		elif answer.lower() == 'n':
+			return False
+			break
+		else:
+			print('You need to input - "y" or "n" letter. Please try again')
 
 #expample QuestionFromArray('Choise variant ','1234')	
 def QuestionFromArray(message,inputarray):
